@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
+import clsx from 'clsx'
 
 
 const App = () => {
+
+
+  
   return (
     <div>
       <Textform />
@@ -10,7 +14,11 @@ const App = () => {
   );
 };
 
+
+
 export default App;
+
+
 
 const Textform = () => {
   const [text, setText] = useState("");
@@ -50,10 +58,29 @@ const Textform = () => {
     doc.save("textutils.pdf");
   };
 
+  const [isMode, setIsMode] = useState(false);
+
+  // dark mode handler 
+  
+  const darkModeHandler = (e) => {
+
+     e.preventDefault();     
+    setIsMode(prevMode => !prevMode);
+     console.log("The button was clicked!!");
+
+  }
+
   return (
     <>
-      <div className="h-min w-full flex justify-center items-center bg-slate-600 p-10 sm:p-20">
-        <form className="w-full max-w-4xl bg-indigo-300/80 rounded-md shadow-custom-box-shadow overflow-hidden backdrop-sepia-0  flex flex-col items-center p-5 md:p-10">
+     <header className="h-20 w-full bg-indigo-200 flex justify-end items-center">
+         <div className="p-5">
+             <button className="px-6 py-3 bg-slate-50 active:duration-150 active:bg-slate-100 outline-none text-black rounded-lg" onClick={(e) => {darkModeHandler(e)}}>{isMode ? "Disable Dark Mode" : "Enable Dark Mode"}</button>
+         </div>
+     </header>
+
+
+      <div className={clsx("h-min w-full flex justify-center items-center", isMode ? "bg-slate-800" : "bg-slate-100", "p-10 sm:p-20")}>
+        <form className={clsx("w-full max-w-4xl bg-indigo-300/80 rounded-md", isMode ? "shadow-custom-box-shadow" : "shadow-custom-shadow", "overflow-hidden backdrop-sepia-0  flex flex-col items-center p-5 md:p-10")}>
           <h2 className="text-xl md:text-2xl font-semibold capitalize text-slate-800 bg-slate-100 py-3 px-6 rounded-lg mb-6 text-center">
             TextUtils Application
           </h2>
